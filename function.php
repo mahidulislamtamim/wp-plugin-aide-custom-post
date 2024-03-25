@@ -67,7 +67,7 @@ function aide_cpt_movie_init() {
 		'hierarchical'       => false,
 		'menu_position'      => null,
 		'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
-        'taxonomies'         => array( 'category' ),  // Enable categories
+        // 'taxonomies'         => array( 'category' ),  // Enable categories
 	);
 
 	register_post_type( 'aide_cpt-movie', $args );
@@ -140,6 +140,39 @@ function add_my_custom_meta_box_nonce() {
     }
 }
 
+
+
+function aide_cpt_movie_taxonomy_registration() {
+    $labels = array(
+        'name'                       => 'Movie Categories',
+        'singular_name'              => 'Movie Category',
+        'search_items'               => 'Search Movie Categories',
+        'all_items'                  => 'All Movie Categories',
+        'edit_item'                  => 'Edit Movie Category',
+        'update_item'                => 'Update Movie Category',
+        'add_new_item'               => 'Add New Movie Category',
+        'new_item_name'              => 'New Movie Category Name',
+        'menu_name'                  => 'Movie Categories',
+        'popular_items'              => 'Popular Movie Categories',
+        'separate_items_with_commas' => 'Separate custom categories with commas',
+        'add_or_remove_items'        => 'Add or remove custom categories',
+        'choose_from_most_used'      => 'Choose from the most used custom categories',
+    );
+
+    $args = array(
+        'labels'            => $labels,
+        'hierarchical'      => true,
+        'public'            => true,
+        'show_ui'           => true,
+        'show_admin_column' => true,
+        'query_var'         => true,
+        'rewrite'           => array( 'slug' => 'movie-category' ), // Customize the slug
+    );
+
+    register_taxonomy( 'movie_category', 'aide_cpt-movie', $args );
+}
+
+add_action( 'init', 'aide_cpt_movie_taxonomy_registration' );
 
 
 
